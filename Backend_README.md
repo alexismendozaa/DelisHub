@@ -30,7 +30,7 @@ Backend para una red social de recetas de comida que permite a los usuarios regi
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone (https://github.com/alexismendozaa/DelisHub.git)
 cd recipe-social-network
 ```
 
@@ -42,19 +42,18 @@ npm install
 ### 3. Configurar variables de entorno
 Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
 ```env
-DB_HOST=<tu-endpoint-rds.amazonaws.com>
-DB_NAME=recipe_db
-DB_USER=admin
-DB_PASSWORD=<tu_password>
+DB_HOST=localhost
+DB_USER=alexis
+DB_PASSWORD=admin123
+DB_NAME=postgresql
 DB_PORT=5432
-JWT_SECRET=<clave_secreta>
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
+JWT_SECRET=clave_secreta_segura
+
 ```
 
 ### 4. Inicializar la base de datos
 - Configura tu instancia de PostgreSQL en AWS RDS.
-- Crea la base de datos con el nombre especificado en `DB_NAME`.
+- Crea la base de datos con el nombre especificado en `postregsql`.
 - Ejecuta las migraciones y/o modelos definidos automáticamente con Sequelize.
 
 ### 5. Iniciar el servidor
