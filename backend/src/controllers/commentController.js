@@ -5,9 +5,6 @@ const User = require('../models/User');
 // Crear un nuevo comentario
 const createComment = async (req, res) => {
     try {
-        console.log('Datos recibidos en createComment:', req.body);
-        console.log('Usuario autenticado:', req.user);
-
         const { recipeId, content } = req.body;
         const userId = req.user.id;
 
@@ -28,7 +25,6 @@ const createComment = async (req, res) => {
     }
 };
 
-
 // Obtener todos los comentarios de una receta
 const getCommentsByRecipe = async (req, res) => {
     try {
@@ -37,7 +33,7 @@ const getCommentsByRecipe = async (req, res) => {
         const comments = await Comment.findAll({
             where: { recipeId },
             include: [
-                { model: User, attributes: ['id', 'username'] } // Agrega información del usuario
+                { model: User, attributes: ['id', 'username', 'email'] } // Incluir información del usuario con email
             ],
             order: [['createdAt', 'DESC']], // Ordenar por fecha de creación
         });
@@ -54,7 +50,7 @@ const updateComment = async (req, res) => {
     try {
         const { id } = req.params;
         const { content } = req.body;
-        const userId = req.user.id; // ID del usuario autenticado
+        const userId = req.user.id;
 
         if (!content) {
             return res.status(400).json({ error: 'Content is required to update a comment.' });
@@ -82,7 +78,7 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {
     try {
         const { id } = req.params;
-        const userId = req.user.id; // ID del usuario autenticado
+        const userId = req.user.id;
 
         const comment = await Comment.findByPk(id);
         if (!comment) {
@@ -105,14 +101,12 @@ const canModifyComment = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Obtener el comentario por ID
         const comment = await Comment.findByPk(id);
 
         if (!comment) {
             return res.status(404).json({ error: 'Comment not found' });
         }
 
-        // Verificar si el usuario autenticado es el creador del comentario
         const isCreator = comment.userId === req.user.id;
 
         res.json({ canModify: isCreator });

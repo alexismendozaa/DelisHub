@@ -17,8 +17,8 @@ const Comment = sequelize.define('Comment', {
 
 // Relaciones
 Comment.belongsTo(User, { foreignKey: 'userId' });
-Comment.belongsTo(Recipe, { foreignKey: 'recipeId' });
+Comment.belongsTo(Recipe, { foreignKey: 'recipeId', onDelete: 'CASCADE' });
 User.hasMany(Comment, { foreignKey: 'userId' });
-Recipe.hasMany(Comment, { foreignKey: 'recipeId' });
+Recipe.hasMany(Comment, { foreignKey: 'recipeId', onDelete: 'CASCADE' });
 
 module.exports = Comment;
